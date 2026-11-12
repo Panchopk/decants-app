@@ -35,7 +35,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <main className="mx-auto max-w-xl p-4 pb-28" key={estado.simbolo}>
+      <main className="mx-auto max-w-xl pb-[calc(7.5rem+env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[max(1rem,env(safe-area-inset-top))]" key={estado.simbolo}>
         {avisar && (
           <Link
             to="/ajustes"

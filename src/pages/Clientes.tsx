@@ -44,7 +44,7 @@ export default function Clientes() {
         onChange={(e) => setBusqueda(e.target.value)}
         className="mt-4 w-full rounded-lg border border-line-strong bg-surface p-3"
       />
-      <label className="mt-3 flex items-center gap-2 text-sm">
+      <label className="mt-2 flex min-h-11 items-center gap-2 text-sm">
         <input
           type="checkbox"
           checked={soloDeudores}

@@ -31,7 +31,7 @@ export default function PerfumeDetalle() {
     return (
       <section>
         <p>Perfume no encontrado.</p>
-        <Link to="/perfumes" className="text-accent-text">
+        <Link to="/perfumes" className="inline-flex min-h-11 items-center text-accent-text">
           Volver
         </Link>
       </section>
@@ -72,7 +72,7 @@ export default function PerfumeDetalle() {
 
   return (
     <section>
-      <Link to="/perfumes" className="text-sm text-accent-text">
+      <Link to="/perfumes" className="-ml-1 inline-flex min-h-11 items-center px-1 text-sm text-accent-text">
         ← Perfumes
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{perfume.nombre}</h1>

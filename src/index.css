@@ -128,3 +128,55 @@ textarea::placeholder {
   color: var(--muted);
   opacity: 0.8;
 }
+
+/* Que se sienta como app instalada, no como página web */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+/* Sin retraso de toque ni zoom por doble toque en controles */
+button,
+a,
+[role="button"],
+label,
+summary {
+  touch-action: manipulation;
+}
+
+/* El texto de un control no se selecciona al mantener pulsado */
+button,
+[role="button"],
+nav a,
+label:has(input[type="checkbox"]),
+label:has(input[type="file"]) {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Respuesta inmediata al tocar (el resaltado gris del navegador está desactivado) */
+button:not(:disabled),
+a {
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+
+button:not(:disabled):active,
+a:active {
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled),
+  a {
+    transition: none;
+  }
+}
+
+/* Los campos no deben provocar zoom al enfocar en iOS (mínimo 16 px) */
+input,
+textarea,
+select {
+  font-size: max(16px, 1rem);
+}

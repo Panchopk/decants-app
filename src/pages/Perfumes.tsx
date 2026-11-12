@@ -38,13 +38,13 @@ export default function Perfumes() {
       <div className="mt-4 flex gap-2 text-sm">
         <button
           onClick={() => setVerArchivados(false)}
-          className={`rounded-full px-3 py-2 ${!verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
+          className={`min-h-11 rounded-full px-4 ${!verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
         >
           Activos
         </button>
         <button
           onClick={() => setVerArchivados(true)}
-          className={`rounded-full px-3 py-2 ${verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
+          className={`min-h-11 rounded-full px-4 ${verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
         >
           Archivados
         </button>

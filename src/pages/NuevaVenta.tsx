@@ -142,7 +142,7 @@ export default function NuevaVenta() {
               </div>
             )}
           </div>
-          <button onClick={() => setCliente(null)} className="px-2 py-1 text-sm text-accent-text">
+          <button onClick={() => setCliente(null)} className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-sm text-accent-text">
             Cambiar
           </button>
         </div>
@@ -231,7 +231,7 @@ export default function NuevaVenta() {
               <button
                 aria-label="Quitar"
                 onClick={() => setItems((its) => its.filter((_, j) => j !== i))}
-                className="px-2 text-xl text-muted"
+                className="flex min-h-11 min-w-11 items-center justify-center text-xl text-muted"
               >
                 ×
               </button>
@@ -240,7 +240,7 @@ export default function NuevaVenta() {
               <label>
                 ml
                 <input
-                  className="mt-1 w-full rounded-lg border border-line-strong p-2"
+                  className="mt-1 w-full rounded-lg border border-line-strong p-2.5"
                   type="number"
                   inputMode="decimal"
                   step="0.1"
@@ -254,7 +254,7 @@ export default function NuevaVenta() {
                   <button
                     aria-label="Menos"
                     onClick={() => cambiarItem(i, { cantidad: Math.max(1, it.cantidad - 1) })}
-                    className="h-10 w-10 rounded-lg bg-sunken text-lg"
+                    className="h-11 w-11 rounded-lg bg-sunken text-lg"
                   >
                     −
                   </button>
@@ -262,7 +262,7 @@ export default function NuevaVenta() {
                   <button
                     aria-label="Más"
                     onClick={() => cambiarItem(i, { cantidad: it.cantidad + 1 })}
-                    className="h-10 w-10 rounded-lg bg-sunken text-lg"
+                    className="h-11 w-11 rounded-lg bg-sunken text-lg"
                   >
                     +
                   </button>
@@ -271,7 +271,7 @@ export default function NuevaVenta() {
               <label>
                 Precio c/u
                 <input
-                  className="mt-1 w-full rounded-lg border border-line-strong p-2"
+                  className="mt-1 w-full rounded-lg border border-line-strong p-2.5"
                   type="number"
                   inputMode="numeric"
                   value={it.precioUnitario}
@@ -295,7 +295,7 @@ export default function NuevaVenta() {
         <span data-testid="total">{formatoMonto(total)}</span>
       </div>
 
-      <label className="mt-4 flex items-center gap-3 text-base font-medium">
+      <label className="mt-4 flex min-h-11 items-center gap-3 text-base font-medium">
         <input
           type="checkbox"
           className="h-6 w-6"

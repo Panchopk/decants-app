@@ -36,7 +36,7 @@ export default function ClienteDetalle() {
     return (
       <section>
         <p>Cliente no encontrado.</p>
-        <Link to="/clientes" className="text-accent-text">
+        <Link to="/clientes" className="inline-flex min-h-11 items-center text-accent-text">
           Volver
         </Link>
       </section>
@@ -87,7 +87,7 @@ export default function ClienteDetalle() {
 
   return (
     <section>
-      <Link to="/clientes" className="text-sm text-accent-text">
+      <Link to="/clientes" className="-ml-1 inline-flex min-h-11 items-center px-1 text-sm text-accent-text">
         ← Clientes
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{cliente.nombre}</h1>
@@ -148,7 +148,7 @@ export default function ClienteDetalle() {
             <button
               type="button"
               onClick={() => setMonto(String(saldo))}
-              className="text-sm font-medium text-accent-text"
+              className="inline-flex min-h-11 items-center text-sm font-medium text-accent-text"
             >
               Pagar todo ({formatoMonto(saldo)})
             </button>
@@ -206,7 +206,7 @@ export default function ClienteDetalle() {
                   ))}
                   {!v.anulada && (
                     <div className="text-right">
-                      <button onClick={() => anularVenta(v.id)} className="px-2 py-1 text-debt">
+                      <button onClick={() => anularVenta(v.id)} className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-debt">
                         Anular
                       </button>
                     </div>
@@ -228,7 +228,7 @@ export default function ClienteDetalle() {
                   </span>
                   <button
                     onClick={() => eliminarPago(p.id, p.monto)}
-                    className="px-2 py-1 text-debt"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-debt"
                   >
                     Eliminar
                   </button>

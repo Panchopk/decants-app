@@ -145,7 +145,7 @@ export default function PerfumeForm() {
                   type="button"
                   aria-label="Quitar tamaño"
                   onClick={() => setPrecios((ps) => ps.filter((_, j) => j !== i))}
-                  className="px-3 py-2 text-xl text-muted"
+                  className="flex min-h-11 min-w-11 items-center justify-center text-xl text-muted"
                 >
                   ×
                 </button>
@@ -155,7 +155,7 @@ export default function PerfumeForm() {
           <button
             type="button"
             onClick={() => setPrecios((ps) => [...ps, { ml: '', precio: '' }])}
-            className="mt-2 text-sm font-medium text-accent-text"
+            className="mt-1 inline-flex min-h-11 items-center text-sm font-medium text-accent-text"
           >
             + Agregar tamaño
           </button>
