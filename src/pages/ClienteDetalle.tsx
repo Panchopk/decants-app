@@ -74,6 +74,16 @@ export default function ClienteDetalle() {
     }
   }
 
+  async function anularVenta(ventaId: string) {
+    if (
+      confirm(
+        'Anular esta venta devuelve los ml al perfume y baja la deuda. Los pagos ya registrados se conservan. ¿Anular?',
+      )
+    ) {
+      await db.ventas.update(ventaId, { anulada: true })
+    }
+  }
+
   return (
     <section>
       <Link to="/clientes" className="text-sm text-indigo-600">
@@ -174,6 +184,13 @@ export default function ClienteDetalle() {
                       {i.cantidad} × {formatoMl(i.ml)} ml {nombrePerfume(i.perfumeId)}
                     </div>
                   ))}
+                  {!v.anulada && (
+                    <div className="text-right">
+                      <button onClick={() => anularVenta(v.id)} className="px-2 py-1 text-red-600">
+                        Anular
+                      </button>
+                    </div>
+                  )}
                 </li>
               )
             }
