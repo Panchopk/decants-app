@@ -1,6 +1,7 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Avatar from '../components/Avatar'
 import { EtiquetaSaldo } from '../components/Monto'
 import { db } from '../db/db'
 import { saldoCliente } from '../lib/calculos'
@@ -65,9 +66,10 @@ export default function Clientes() {
           <li key={c.id}>
             <Link
               to={`/clientes/${c.id}`}
-              className="flex items-center justify-between rounded-xl bg-surface p-4 shadow-sm"
+              className="flex min-h-14 items-center gap-3 rounded-xl bg-surface p-3 shadow-sm"
             >
-              <span className="font-semibold">{c.nombre}</span>
+              <Avatar nombre={c.nombre} />
+              <span className="min-w-0 flex-1 truncate font-semibold">{c.nombre}</span>
               <EtiquetaSaldo saldo={saldo} />
             </Link>
           </li>

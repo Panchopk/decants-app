@@ -1,5 +1,6 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
+import Avatar from '../components/Avatar'
 import BarraStock from '../components/BarraStock'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
@@ -48,18 +49,19 @@ export default function Inicio() {
         </div>
       </div>
 
-      <h2 className="mt-6 font-semibold">Quién te debe</h2>
+      <h2 className="mt-6 font-semibold">Deudores</h2>
       {deudores.length === 0 ? (
-        <p className="mt-2 text-sm text-muted">Nadie te debe nada. 🎉</p>
+        <p className="mt-2 text-sm text-muted">No hay deudas pendientes.</p>
       ) : (
         <ul className="mt-2 space-y-2" data-testid="deudores">
           {deudores.map(({ c, saldo }) => (
             <li key={c.id}>
               <Link
                 to={`/clientes/${c.id}`}
-                className="flex items-center justify-between rounded-xl bg-surface p-4 shadow-sm"
+                className="flex min-h-14 items-center gap-3 rounded-xl bg-surface p-3 shadow-sm"
               >
-                <span className="font-medium">{c.nombre}</span>
+                <Avatar nombre={c.nombre} />
+                <span className="min-w-0 flex-1 truncate font-medium">{c.nombre}</span>
                 <span className="font-semibold text-debt">{formatoMonto(saldo)}</span>
               </Link>
             </li>

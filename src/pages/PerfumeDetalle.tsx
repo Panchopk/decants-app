@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import BarraStock from '../components/BarraStock'
+import { useConfirmar } from '../components/PanelConfirmar'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
 import { mlRestantes, tieneStockBajo } from '../lib/calculos'
@@ -9,6 +10,7 @@ import { formatoFecha, formatoMl, formatoMonto } from '../lib/formato'
 
 export default function PerfumeDetalle() {
   const { id = '' } = useParams()
+  const { confirmar, panel } = useConfirmar()
   const umbral = useUmbralStockBajo()
   const [ajustando, setAjustando] = useState(false)
   const [mlAjuste, setMlAjuste] = useState('')
@@ -48,7 +50,7 @@ export default function PerfumeDetalle() {
     e.preventDefault()
     const ml = Number(mlAjuste)
     if (!mlAjuste.trim() || Number.isNaN(ml) || ml === 0) {
-      return setError('Escribe los ml a ajustar (negativo para restar).')
+      return setError('Escribir los ml a ajustar (negativo para restar).')
     }
     await db.ajustes.add({
       id: crypto.randomUUID(),
@@ -64,10 +66,22 @@ export default function PerfumeDetalle() {
   }
 
   async function alternarArchivo() {
-    const accion = perfume!.archivado ? 'restaurar' : 'archivar'
-    if (confirm(`¿Quieres ${accion} "${perfume!.nombre}"?`)) {
-      await db.perfumes.update(perfume!.id, { archivado: !perfume!.archivado })
-    }
+    const archivar = !perfume!.archivado
+    const si = await confirmar(
+      archivar
+        ? {
+            titulo: `¿Archivar "${perfume!.nombre}"?`,
+            descripcion:
+              'Deja de aparecer al vender. El historial y los ml se conservan, y se puede restaurar cuando haga falta.',
+            confirmar: 'Archivar perfume',
+          }
+        : {
+            titulo: `¿Restaurar "${perfume!.nombre}"?`,
+            descripcion: 'Vuelve a aparecer al vender.',
+            confirmar: 'Restaurar perfume',
+          },
+    )
+    if (si) await db.perfumes.update(perfume!.id, { archivado: archivar })
   }
 
   return (
@@ -206,6 +220,7 @@ export default function PerfumeDetalle() {
       >
         {perfume.archivado ? 'Restaurar perfume' : 'Archivar perfume'}
       </button>
+      {panel}
     </section>
   )
 }

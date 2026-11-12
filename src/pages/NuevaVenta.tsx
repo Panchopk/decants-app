@@ -1,6 +1,6 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { db } from '../db/db'
 import type { Cliente, ItemVenta, Pago, Venta } from '../db/tipos'
 import { mlRestantes, saldoCliente, totalVenta } from '../lib/calculos'
@@ -25,7 +25,9 @@ export default function NuevaVenta() {
     return { clientes, perfumes, ventas, ajustes, pagos }
   })
 
-  const [cliente, setCliente] = useState<Cliente | null>(null)
+  const [params] = useSearchParams()
+  // undefined = sin elegir todavía: se usa el cliente de la dirección (?cliente=) si viene de su ficha
+  const [elegido, setElegido] = useState<Cliente | null | undefined>(undefined)
   const [busqueda, setBusqueda] = useState('')
   const [items, setItems] = useState<ItemLocal[]>([])
   const [abiertos, setAbiertos] = useState<string[]>([])
@@ -40,6 +42,11 @@ export default function NuevaVenta() {
 
   if (!datos) return null
   const { clientes, perfumes, ventas, ajustes, pagos } = datos
+  const cliente =
+    elegido !== undefined
+      ? elegido
+      : (clientes.find((c) => c.id === params.get('cliente')) ?? null)
+  const setCliente = setElegido
   const activos = perfumes
     .filter((p) => !p.archivado)
     .sort((a, b) => a.nombre.localeCompare(b.nombre))

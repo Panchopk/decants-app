@@ -23,3 +23,20 @@ export function formatoFecha(iso: string): string {
     year: 'numeric',
   })
 }
+
+/** Día local (AAAA-MM-DD) para agrupar movimientos. */
+export function claveDia(iso: string): string {
+  const d = new Date(iso)
+  const p = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`
+}
+
+/** "Hoy", "Ayer" o la fecha. */
+export function etiquetaDia(iso: string, ahora: Date = new Date()): string {
+  const clave = claveDia(iso)
+  if (clave === claveDia(ahora.toISOString())) return 'Hoy'
+  const ayer = new Date(ahora)
+  ayer.setDate(ayer.getDate() - 1)
+  if (clave === claveDia(ayer.toISOString())) return 'Ayer'
+  return formatoFecha(iso)
+}

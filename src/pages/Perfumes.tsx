@@ -52,7 +52,7 @@ export default function Perfumes() {
 
       {lista.length === 0 && (
         <p className="mt-6 text-muted">
-          {verArchivados ? 'No hay perfumes archivados.' : 'Aún no hay perfumes. Crea el primero.'}
+          {verArchivados ? 'No hay perfumes archivados.' : 'Aún no hay perfumes. Crear el primero.'}
         </p>
       )}
 

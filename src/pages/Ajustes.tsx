@@ -1,5 +1,6 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
+import { useConfirmar } from '../components/PanelConfirmar'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
 import { formatoFecha } from '../lib/formato'
@@ -13,6 +14,7 @@ const TEMAS: { valor: Tema; etiqueta: string }[] = [
 ]
 
 export default function Ajustes() {
+  const { confirmar, panel } = useConfirmar()
   const umbral = useUmbralStockBajo()
   const [tema, setTema] = useState<Tema>(leerTema)
   const config = useLiveQuery(() => db.config.toArray())
@@ -24,7 +26,7 @@ export default function Ajustes() {
 
   async function exportar() {
     await exportarRespaldo()
-    setMensaje({ tipo: 'ok', texto: 'Respaldo descargado. Guárdalo en un lugar seguro (Drive, correo, etc.).' })
+    setMensaje({ tipo: 'ok', texto: 'Respaldo descargado. Guardarlo en un lugar seguro (Drive, correo, etc.).' })
   }
 
   async function importar(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,17 +43,18 @@ export default function Ajustes() {
     if (!res.ok) return setMensaje({ tipo: 'error', texto: res.error })
     const r = res.respaldo
     const resumen = `${r.perfumes.length} perfumes, ${r.clientes.length} clientes, ${r.ventas.length} ventas, ${r.pagos.length} pagos`
-    if (
-      !confirm(
-        `Esto REEMPLAZA todos los datos actuales por los del respaldo (${resumen}). ¿Continuar?`,
-      )
-    )
-      return
+    const si = await confirmar({
+      titulo: '¿Reemplazar todos los datos?',
+      descripcion: `Los datos actuales se reemplazan por los del respaldo (${resumen}). No se puede deshacer.`,
+      confirmar: 'Reemplazar datos',
+      peligro: true,
+    })
+    if (!si) return
     try {
       await restaurarRespaldo(r)
       setMensaje({ tipo: 'ok', texto: `Respaldo importado: ${resumen}.` })
     } catch {
-      setMensaje({ tipo: 'error', texto: 'No se pudo importar. Tus datos actuales no se modificaron.' })
+      setMensaje({ tipo: 'error', texto: 'No se pudo importar. Los datos actuales no se modificaron.' })
     }
   }
 
@@ -61,10 +64,10 @@ export default function Ajustes() {
 
       <h2 className="mt-6 font-semibold">Respaldo</h2>
       <p className="mt-1 text-sm text-muted">
-        Tus datos viven solo en este celular. Exporta un respaldo seguido.{' '}
+        Los datos viven solo en este celular: conviene exportar un respaldo seguido.{' '}
         {typeof ultimo === 'string'
           ? `Último respaldo: ${formatoFecha(ultimo)}.`
-          : 'Aún no has exportado ninguno.'}
+          : 'Todavía no hay ningún respaldo.'}
       </p>
       <div className="mt-3 grid grid-cols-2 gap-3">
         <button onClick={exportar} className="rounded-lg bg-primary p-3 font-medium text-on-primary">
@@ -127,6 +130,7 @@ export default function Ajustes() {
           onChange={(e) => db.config.put({ clave: 'simboloMoneda', valor: e.target.value })}
         />
       </label>
+      {panel}
     </section>
   )
 }

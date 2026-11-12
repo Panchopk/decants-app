@@ -31,6 +31,7 @@
   --debt: #dc2626;
   --debt-bar: #ef4444;
   --debt-soft: #fee2e2;
+  --debt-btn: #b91c1c;
   --debt-ink: #991b1b;
   --credit: #16a34a;
   --credit-btn: #16a34a;
@@ -66,6 +67,7 @@
   --debt: #f87171;
   --debt-bar: #f87171;
   --debt-soft: #450a0a;
+  --debt-btn: #dc2626;
   --debt-ink: #fca5a5;
   --credit: #4ade80;
   --credit-btn: #15803d;
@@ -96,6 +98,7 @@
   --color-debt: var(--debt);
   --color-debt-bar: var(--debt-bar);
   --color-debt-soft: var(--debt-soft);
+  --color-debt-btn: var(--debt-btn);
   --color-debt-ink: var(--debt-ink);
   --color-credit: var(--credit);
   --color-credit-btn: var(--credit-btn);

@@ -127,3 +127,4 @@ Selector "Apariencia" en Ajustes con AutomÃ¡tico, Claro y Oscuro. AutomÃ¡tic
 7. Para publicar, solo subir a `main` cuando el dueÃ±o lo pida: eso actualiza la app que usa su amigo.
 
 
+

@@ -47,7 +47,7 @@ export default function PerfumeForm() {
   async function guardar(e: React.FormEvent) {
     e.preventDefault()
     const ml = Number(mlIniciales)
-    if (!nombre.trim()) return setError('Escribe el nombre.')
+    if (!nombre.trim()) return setError('Escribir el nombre.')
     if (!(ml > 0)) return setError('Los ml de la botella deben ser mayores a 0.')
 
     const preciosValidos = precios

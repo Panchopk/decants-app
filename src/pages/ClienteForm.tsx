@@ -22,7 +22,7 @@ function Formulario({ existente }: { existente?: Cliente }) {
 
   async function guardar(e: React.FormEvent) {
     e.preventDefault()
-    if (!nombre.trim()) return setError('Escribe el nombre.')
+    if (!nombre.trim()) return setError('Escribir el nombre.')
     const datos = {
       nombre: nombre.trim(),
       telefono: telefono.trim() || undefined,
