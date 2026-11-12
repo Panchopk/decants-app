@@ -6,6 +6,7 @@ import { db } from '../db/db'
 import type { MetodoPago } from '../db/tipos'
 import { saldoCliente } from '../lib/calculos'
 import { formatoFecha, formatoMl, formatoMonto } from '../lib/formato'
+import { enlaceWhatsApp } from '../lib/whatsapp'
 
 type Movimiento =
   | { tipo: 'venta'; fecha: string; id: string }
@@ -111,6 +112,25 @@ export default function ClienteDetalle() {
           Editar
         </Link>
       </div>
+
+      {saldo > 0 &&
+        (() => {
+          const enlace = enlaceWhatsApp(cliente.telefono, cliente.nombre, saldo)
+          return enlace ? (
+            <a
+              href={enlace}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 block rounded-lg bg-green-600 p-3 text-center font-medium text-white"
+            >
+              Recordar por WhatsApp
+            </a>
+          ) : (
+            <p className="mt-3 text-sm text-slate-500">
+              Agrega un teléfono (con código de país) para recordar por WhatsApp.
+            </p>
+          )
+        })()}
 
       {pagando && (
         <form onSubmit={guardarPago} className="mt-4 space-y-3 rounded-xl bg-white p-4 shadow-sm">
