@@ -1,7 +1,5 @@
 import { describe, expect, it } from 'vitest'
 import {
-  diasDesde,
-  necesitaRespaldo,
   nombreArchivoRespaldo,
   validarRespaldo,
   VERSION_RESPALDO,
@@ -67,24 +65,6 @@ describe('validarRespaldo', () => {
     const c = base()
     c.pagos[0].clienteId = 'nadie'
     expect(validarRespaldo(c).ok).toBe(false)
-  })
-})
-
-describe('aviso de respaldo', () => {
-  const ahora = new Date('2026-03-10T12:00:00Z')
-  it('cuenta días enteros', () => {
-    expect(diasDesde('2026-03-03T12:00:00Z', ahora)).toBe(7)
-  })
-  it('avisa pasados más de 7 días desde el último respaldo', () => {
-    expect(necesitaRespaldo('2026-03-02T00:00:00Z', ['2026-01-01'], ahora)).toBe(true)
-    expect(necesitaRespaldo('2026-03-05T00:00:00Z', ['2026-01-01'], ahora)).toBe(false)
-  })
-  it('sin respaldo previo usa el dato más antiguo', () => {
-    expect(necesitaRespaldo(undefined, ['2026-03-09', '2026-01-01'], ahora)).toBe(true)
-    expect(necesitaRespaldo(undefined, ['2026-03-09'], ahora)).toBe(false)
-  })
-  it('sin datos no avisa', () => {
-    expect(necesitaRespaldo(undefined, [], ahora)).toBe(false)
   })
 })
 

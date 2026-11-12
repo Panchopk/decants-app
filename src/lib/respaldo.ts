@@ -2,7 +2,6 @@ import { db } from '../db/db'
 import type { AjusteStock, Cliente, Pago, Perfume, Venta } from '../db/tipos'
 
 export const VERSION_RESPALDO = 1
-export const DIAS_AVISO_RESPALDO = 7
 
 export interface Respaldo {
   version: number
@@ -86,33 +85,6 @@ export function validarRespaldo(json: unknown): { ok: true; respaldo: Respaldo }
   if ((json.ajustes as AjusteStock[]).some((a) => !perfumes.has(a.perfumeId)))
     return { ok: false, error: 'Un ajuste apunta a un perfume que no existe.' }
   return { ok: true, respaldo: json as unknown as Respaldo }
-}
-
-/** Días enteros desde `desde` hasta `ahora`. */
-export function diasDesde(desde: string, ahora: Date = new Date()): number {
-  return Math.floor((ahora.getTime() - new Date(desde).getTime()) / 86400000)
-}
-
-/**
- * Fecha de referencia para el aviso: el último respaldo, o si nunca se exportó,
- * el dato más antiguo. Devuelve null si no hay datos (nada que respaldar).
- */
-export function referenciaRespaldo(
-  ultimoRespaldo: string | undefined,
-  fechasDatos: string[],
-): string | null {
-  if (ultimoRespaldo) return ultimoRespaldo
-  if (fechasDatos.length === 0) return null
-  return [...fechasDatos].sort()[0]
-}
-
-export function necesitaRespaldo(
-  ultimoRespaldo: string | undefined,
-  fechasDatos: string[],
-  ahora: Date = new Date(),
-): boolean {
-  const ref = referenciaRespaldo(ultimoRespaldo, fechasDatos)
-  return ref !== null && diasDesde(ref, ahora) > DIAS_AVISO_RESPALDO
 }
 
 export async function construirRespaldo(): Promise<Respaldo> {

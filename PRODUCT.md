@@ -24,7 +24,7 @@ Herramienta personal, sin servidor y sin costo: todos los datos viven en el celu
 - Pagos parciales (abonos) a la cuenta del cliente, no a una venta puntual.
 - Tamaños fijos con precio por tamaño (por ejemplo 3, 5 y 10 ml); precios sin decimales.
 - Recordatorio de cobro por WhatsApp (abre `wa.me`, no envía solo).
-- Respaldo manual: exportar e importar un archivo JSON. Aviso si pasan más de 7 días sin exportar.
+- Respaldo manual: exportar e importar un archivo JSON desde Ajustes. Sin aviso por tiempo (el dueño pidió quitar el aviso de 7 días).
 - Publicada como PWA en GitHub Pages: https://panchopk.github.io/decants-app/
 
 ## Capabilities and Constraints

@@ -1,9 +1,9 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
-import { HashRouter, Link, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import BotonTema from './components/BotonTema'
 import NavInferior from './components/NavInferior'
 import { db } from './db/db'
 import { setSimboloMoneda } from './lib/formato'
-import { necesitaRespaldo } from './lib/respaldo'
 import Ajustes from './pages/Ajustes'
 import ClienteDetalle from './pages/ClienteDetalle'
 import ClienteForm from './pages/ClienteForm'
@@ -15,35 +15,21 @@ import PerfumeForm from './pages/PerfumeForm'
 import Perfumes from './pages/Perfumes'
 
 export default function App() {
-  const estado = useLiveQuery(async () => {
-    const [config, clientes, perfumes] = await Promise.all([
-      db.config.toArray(),
-      db.clientes.toArray(),
-      db.perfumes.toArray(),
-    ])
-    const valor = (k: string) => config.find((c) => c.clave === k)?.valor
-    return {
-      simbolo: String(valor('simboloMoneda') ?? ''),
-      ultimo: typeof valor('ultimoRespaldo') === 'string' ? (valor('ultimoRespaldo') as string) : undefined,
-      fechas: [...clientes, ...perfumes].map((x) => x.creadoEn),
-    }
-  })
-  if (!estado) return null
+  const simbolo = useLiveQuery(async () => String((await db.config.get('simboloMoneda'))?.valor ?? ''))
+  if (simbolo === undefined) return null
   // El símbolo se aplica al formatear; la `key` remonta las pantallas al cambiarlo.
-  setSimboloMoneda(estado.simbolo)
-  const avisar = necesitaRespaldo(estado.ultimo, estado.fechas)
+  setSimboloMoneda(simbolo)
 
   return (
     <HashRouter>
-      <main className="mx-auto max-w-xl pb-[calc(7.5rem+env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[max(1rem,env(safe-area-inset-top))]" key={estado.simbolo}>
-        {avisar && (
-          <Link
-            to="/ajustes"
-            className="mb-4 block rounded-lg bg-warn-soft p-3 text-sm text-warn"
-          >
-            Hace más de 7 días sin exportar un respaldo. Tocar aquí para hacerlo.
-          </Link>
-        )}
+      <main
+        className="mx-auto max-w-xl pb-[calc(7.5rem+env(safe-area-inset-bottom))] pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[max(0.25rem,env(safe-area-inset-top))]"
+        key={simbolo}
+      >
+        <header className="flex min-h-11 items-center justify-between">
+          <span className="text-sm font-semibold tracking-wide text-muted">Decants</span>
+          <BotonTema />
+        </header>
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/venta" element={<NuevaVenta />} />
