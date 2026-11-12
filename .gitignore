@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Respaldos con datos de clientes: nunca subir al repositorio
+decants-respaldo-*.json
+*.respaldo.json

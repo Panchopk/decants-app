@@ -6,10 +6,33 @@ import { defineConfig } from 'vitest/config'
 // En GitHub Pages la app vive en /<repo>/. El workflow define BASE_PATH; en local es "/".
 const base = process.env.BASE_PATH ?? '/'
 
+// Política de seguridad de contenido: la app no necesita red ni scripts externos.
+// Solo en el build (el servidor de desarrollo necesita scripts en línea).
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "connect-src 'self'",
+  "worker-src 'self'",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ')
+
 // https://vite.dev/config/
 export default defineConfig({
   base,
   plugins: [
+    {
+      name: 'csp-meta',
+      apply: 'build',
+      transformIndexHtml: () => [
+        { tag: 'meta', attrs: { 'http-equiv': 'Content-Security-Policy', content: csp }, injectTo: 'head-prepend' },
+        { tag: 'meta', attrs: { name: 'referrer', content: 'no-referrer' }, injectTo: 'head-prepend' },
+      ],
+    },
     react(),
     tailwindcss(),
     VitePWA({
