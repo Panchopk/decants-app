@@ -1,6 +1,8 @@
 ﻿import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NavInferior from './components/NavInferior'
 import Ajustes from './pages/Ajustes'
+import ClienteDetalle from './pages/ClienteDetalle'
+import ClienteForm from './pages/ClienteForm'
 import Clientes from './pages/Clientes'
 import Inicio from './pages/Inicio'
 import NuevaVenta from './pages/NuevaVenta'
@@ -16,6 +18,9 @@ export default function App() {
           <Route path="/" element={<Inicio />} />
           <Route path="/venta" element={<NuevaVenta />} />
           <Route path="/clientes" element={<Clientes />} />
+          <Route path="/clientes/nuevo" element={<ClienteForm />} />
+          <Route path="/clientes/:id" element={<ClienteDetalle />} />
+          <Route path="/clientes/:id/editar" element={<ClienteForm />} />
           <Route path="/perfumes" element={<Perfumes />} />
           <Route path="/perfumes/nuevo" element={<PerfumeForm />} />
           <Route path="/perfumes/:id" element={<PerfumeDetalle />} />
