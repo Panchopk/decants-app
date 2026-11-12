@@ -21,7 +21,7 @@ Repetir paso por paso. Probar cada paso en el celular antes de seguir.
 | 0 | Contexto del producto (`PRODUCT.md`) | Hecho |
 | 1 | Selector de tema claro / oscuro / automÃ¡tico, con el estilo actual | Hecho |
 | 2 | NavegaciÃ³n con Ã­conos y zona del pulgar | Pendiente |
-| 3 | "Nueva venta" en menos de 20 segundos | Pendiente |
+| 3 | "Nueva venta" en menos de 20 segundos | Hecho |
 | 4 | JerarquÃ­a y claridad en Inicio, Clientes y detalle | Pendiente |
 | 5 | RetroalimentaciÃ³n, estados vacÃ­os y movimiento | Pendiente |
 | 6 | Decants vendidos por perfume y uso personal | Pendiente |
@@ -125,4 +125,5 @@ Selector "Apariencia" en Ajustes con AutomÃ¡tico, Claro y Oscuro. AutomÃ¡tic
 5. Al terminar cada paso: `npm test`, `npm run build`, detector de impeccable, commit, y esperar confirmaciÃ³n.
 6. Los commits usan el correo noreply ya configurado en este repositorio; no cambiar `git config`.
 7. Para publicar, solo subir a `main` cuando el dueÃ±o lo pida: eso actualiza la app que usa su amigo.
+
 

@@ -1,5 +1,5 @@
 ﻿import type { ReactNode } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { IconoAjustes, IconoClientes, IconoInicio, IconoMas, IconoPerfumes } from './Iconos'
 
 const tab = ({ isActive }: { isActive: boolean }) =>
@@ -17,6 +17,9 @@ function Tab({ to, icono, children, fin }: { to: string; icono: ReactNode; child
 }
 
 export default function NavInferior() {
+  const { pathname } = useLocation()
+  // Armar una venta es un flujo propio: la barra fija de la venta ocupa ese lugar
+  if (pathname === '/venta') return null
   return (
     <nav
       aria-label="Principal"
