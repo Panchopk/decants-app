@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import BarraStock from '../components/BarraStock'
+import { useAvisos } from '../components/Avisos'
 import { useConfirmar } from '../components/PanelConfirmar'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
@@ -11,6 +12,7 @@ import { formatoFecha, formatoMl, formatoMonto } from '../lib/formato'
 export default function PerfumeDetalle() {
   const { id = '' } = useParams()
   const { confirmar, panel } = useConfirmar()
+  const avisar = useAvisos()
   const umbral = useUmbralStockBajo()
   const [ajustando, setAjustando] = useState(false)
   const [mlAjuste, setMlAjuste] = useState('')
@@ -63,6 +65,7 @@ export default function PerfumeDetalle() {
     setMotivo('')
     setError('')
     setAjustando(false)
+    avisar('Ajuste de stock guardado')
   }
 
   async function alternarArchivo() {
@@ -81,7 +84,10 @@ export default function PerfumeDetalle() {
             confirmar: 'Restaurar perfume',
           },
     )
-    if (si) await db.perfumes.update(perfume!.id, { archivado: archivar })
+    if (si) {
+      await db.perfumes.update(perfume!.id, { archivado: archivar })
+      avisar(archivar ? 'Perfume archivado' : 'Perfume restaurado')
+    }
   }
 
   return (

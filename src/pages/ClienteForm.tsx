@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useAvisos } from '../components/Avisos'
 import { db } from '../db/db'
 import type { Cliente } from '../db/tipos'
 
@@ -15,6 +16,7 @@ export default function ClienteForm() {
 
 function Formulario({ existente }: { existente?: Cliente }) {
   const navigate = useNavigate()
+  const avisar = useAvisos()
   const [nombre, setNombre] = useState(existente?.nombre ?? '')
   const [telefono, setTelefono] = useState(existente?.telefono ?? '')
   const [nota, setNota] = useState(existente?.nota ?? '')
@@ -30,6 +32,7 @@ function Formulario({ existente }: { existente?: Cliente }) {
     }
     if (existente) {
       await db.clientes.update(existente.id, datos)
+      avisar('Cliente guardado')
       navigate(`/clientes/${existente.id}`, { replace: true })
     } else {
       const nuevo: Cliente = {
@@ -38,6 +41,7 @@ function Formulario({ existente }: { existente?: Cliente }) {
         creadoEn: new Date().toISOString(),
       }
       await db.clientes.add(nuevo)
+      avisar('Cliente creado')
       navigate(`/clientes/${nuevo.id}`, { replace: true })
     }
   }

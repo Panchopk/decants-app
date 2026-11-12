@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom'
 import Avatar from '../components/Avatar'
 import BarraStock from '../components/BarraStock'
+import EstadoVacio from '../components/EstadoVacio'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
 import { mlRestantes, saldoCliente, tieneStockBajo, totalPorCobrar } from '../lib/calculos'
@@ -37,6 +38,20 @@ export default function Inicio() {
     .map((p) => ({ p, rest: mlRestantes(p.id, p.mlIniciales, ventas, ajustes) }))
     .filter((x) => tieneStockBajo(x.rest, umbral))
     .sort((a, b) => a.rest - b.rest)
+
+  // Primer uso: sin perfumes ni clientes, indicar por dónde empezar
+  if (perfumes.length === 0 && clientes.length === 0) {
+    return (
+      <section>
+        <h1 className="text-2xl font-bold">Inicio</h1>
+        <EstadoVacio
+          titulo="Empezar"
+          texto="Registrar un perfume y después la primera venta. Aquí se verá cuánto hay por cobrar y qué perfumes se están acabando."
+          accion={{ etiqueta: 'Crear el primer perfume', to: '/perfumes/nuevo' }}
+        />
+      </section>
+    )
+  }
 
   return (
     <section>

@@ -2,6 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Avatar from '../components/Avatar'
+import { useAvisos } from '../components/Avisos'
 import { IconoOpciones } from '../components/Iconos'
 import { useConfirmar } from '../components/PanelConfirmar'
 import { db } from '../db/db'
@@ -18,6 +19,7 @@ const secundario = 'flex min-h-11 items-center justify-center rounded-lg bg-sunk
 export default function ClienteDetalle() {
   const { id = '' } = useParams()
   const { confirmar, panel } = useConfirmar()
+  const avisar = useAvisos()
   const [pagando, setPagando] = useState(false)
   const [monto, setMonto] = useState('')
   const [metodo, setMetodo] = useState<MetodoPago | ''>('')
@@ -82,6 +84,7 @@ export default function ClienteDetalle() {
     setNota('')
     setError('')
     setPagando(false)
+    avisar('Pago registrado')
   }
 
   async function eliminarPago(pagoId: string, m: number) {
@@ -91,7 +94,10 @@ export default function ClienteDetalle() {
       confirmar: 'Eliminar pago',
       peligro: true,
     })
-    if (si) await db.pagos.delete(pagoId)
+    if (si) {
+      await db.pagos.delete(pagoId)
+      avisar('Pago eliminado')
+    }
   }
 
   async function anularVenta(ventaId: string, total: number) {
@@ -101,7 +107,10 @@ export default function ClienteDetalle() {
       confirmar: 'Anular venta',
       peligro: true,
     })
-    if (si) await db.ventas.update(ventaId, { anulada: true })
+    if (si) {
+      await db.ventas.update(ventaId, { anulada: true })
+      avisar('Venta anulada')
+    }
   }
 
   const botonOpciones = (etiqueta: string, accion: () => void) => (

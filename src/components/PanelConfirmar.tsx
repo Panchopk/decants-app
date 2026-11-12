@@ -60,12 +60,12 @@ function Panel({
 
   return (
     <div className="fixed inset-0 z-30 flex items-end justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={() => onCerrar(false)} aria-hidden="true" />
+      <div className="fondo-entra absolute inset-0 bg-black/50" onClick={() => onCerrar(false)} aria-hidden="true" />
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="panel-titulo"
-        className="relative w-full max-w-xl rounded-t-2xl bg-surface p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl"
+        className="panel-entra relative w-full max-w-xl rounded-t-2xl bg-surface p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-2xl"
       >
         <h2 id="panel-titulo" className="text-lg font-bold">
           {titulo}

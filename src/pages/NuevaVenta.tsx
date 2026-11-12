@@ -1,6 +1,7 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useAvisos } from '../components/Avisos'
 import { db } from '../db/db'
 import type { Cliente, ItemVenta, Pago, Venta } from '../db/tipos'
 import { mlRestantes, saldoCliente, totalVenta } from '../lib/calculos'
@@ -14,6 +15,7 @@ const chip = 'inline-flex min-h-11 items-center rounded-lg px-4 font-medium'
 
 export default function NuevaVenta() {
   const navigate = useNavigate()
+  const avisar = useAvisos()
   const datos = useLiveQuery(async () => {
     const [clientes, perfumes, ventas, ajustes, pagos] = await Promise.all([
       db.clientes.toArray(),
@@ -168,6 +170,7 @@ export default function NuevaVenta() {
         await db.pagos.add(pago)
       }
     })
+    avisar('Venta guardada')
     navigate(`/clientes/${cliente.id}`)
   }
 

@@ -1,5 +1,6 @@
 ﻿import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
+import { useAvisos } from '../components/Avisos'
 import { useConfirmar } from '../components/PanelConfirmar'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
@@ -15,6 +16,7 @@ const TEMAS: { valor: Tema; etiqueta: string }[] = [
 
 export default function Ajustes() {
   const { confirmar, panel } = useConfirmar()
+  const avisar = useAvisos()
   const umbral = useUmbralStockBajo()
   const [tema, setTema] = useState<Tema>(leerTema)
   const config = useLiveQuery(() => db.config.toArray())
@@ -26,7 +28,8 @@ export default function Ajustes() {
 
   async function exportar() {
     await exportarRespaldo()
-    setMensaje({ tipo: 'ok', texto: 'Respaldo descargado. Guardarlo en un lugar seguro (Drive, correo, etc.).' })
+    setMensaje(null)
+    avisar('Respaldo descargado. Guardarlo en un lugar seguro.')
   }
 
   async function importar(e: React.ChangeEvent<HTMLInputElement>) {
@@ -52,7 +55,8 @@ export default function Ajustes() {
     if (!si) return
     try {
       await restaurarRespaldo(r)
-      setMensaje({ tipo: 'ok', texto: `Respaldo importado: ${resumen}.` })
+      setMensaje(null)
+      avisar(`Respaldo importado: ${resumen}.`)
     } catch {
       setMensaje({ tipo: 'error', texto: 'No se pudo importar. Los datos actuales no se modificaron.' })
     }

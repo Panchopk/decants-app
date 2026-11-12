@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import BarraStock from '../components/BarraStock'
+import EstadoVacio from '../components/EstadoVacio'
 import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
 import { mlRestantes, tieneStockBajo } from '../lib/calculos'
@@ -50,10 +51,18 @@ export default function Perfumes() {
         </button>
       </div>
 
-      {lista.length === 0 && (
-        <p className="mt-6 text-muted">
-          {verArchivados ? 'No hay perfumes archivados.' : 'Aún no hay perfumes. Crear el primero.'}
-        </p>
+      {datos.perfumes.length === 0 ? (
+        <EstadoVacio
+          titulo="Aún no hay perfumes"
+          texto="Registrar cada botella con su tamaño y los precios por decant. Los ml restantes se calculan solos con cada venta."
+          accion={{ etiqueta: 'Crear perfume', to: '/perfumes/nuevo' }}
+        />
+      ) : (
+        lista.length === 0 && (
+          <p className="mt-6 text-muted">
+            {verArchivados ? 'No hay perfumes archivados.' : 'Todos los perfumes están archivados.'}
+          </p>
+        )
       )}
 
       <ul className="mt-4 space-y-3">

@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../components/Avatar'
+import EstadoVacio from '../components/EstadoVacio'
 import { EtiquetaSaldo } from '../components/Monto'
 import { db } from '../db/db'
 import { saldoCliente } from '../lib/calculos'
@@ -55,10 +56,14 @@ export default function Clientes() {
         Solo deudores
       </label>
 
-      {lista.length === 0 && (
-        <p className="mt-6 text-muted">
-          {datos.clientes.length === 0 ? 'Aún no hay clientes.' : 'Sin resultados.'}
-        </p>
+      {datos.clientes.length === 0 ? (
+        <EstadoVacio
+          titulo="Aún no hay clientes"
+          texto="Cada cliente guarda lo que compra y lo que paga. También se pueden crear al armar una venta."
+          accion={{ etiqueta: 'Crear cliente', to: '/clientes/nuevo' }}
+        />
+      ) : (
+        lista.length === 0 && <p className="mt-6 text-muted">Sin resultados.</p>
       )}
 
       <ul className="mt-4 space-y-3">

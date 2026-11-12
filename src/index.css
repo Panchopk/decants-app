@@ -160,9 +160,13 @@ label:has(input[type="file"]) {
 }
 
 /* Respuesta inmediata al tocar (el resaltado gris del navegador está desactivado) */
-button:not(:disabled),
-a {
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
+@layer base {
+  :where(button:not(:disabled)),
+  a {
+    transition:
+      opacity 100ms var(--ease-fuerte),
+      transform 100ms var(--ease-fuerte);
+  }
 }
 
 button:not(:disabled):active,
@@ -171,9 +175,11 @@ a:active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  button:not(:disabled),
-  a {
-    transition: none;
+  @layer base {
+    :where(button:not(:disabled)),
+    a {
+      transition: none;
+    }
   }
 }
 
@@ -182,4 +188,74 @@ input,
 textarea,
 select {
   font-size: max(16px, 1rem);
+}
+
+/* Curvas de movimiento (ease-out fuerte para entradas; curva de cajón para el panel) */
+@theme {
+  --ease-fuerte: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-panel: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+:root {
+  --ease-fuerte: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-panel: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+button:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* Medidor de stock: se llena desde la izquierda al aparecer */
+.rellenar {
+  transform-origin: left;
+  transition: transform 250ms var(--ease-fuerte);
+}
+
+@starting-style {
+  .rellenar {
+    transform: scaleX(0);
+  }
+}
+
+/* Panel inferior de confirmación */
+.panel-entra {
+  transition:
+    transform 220ms var(--ease-panel),
+    opacity 220ms var(--ease-panel);
+}
+
+.fondo-entra {
+  transition: opacity 200ms ease;
+}
+
+@starting-style {
+  .panel-entra {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .fondo-entra {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled):active {
+    transform: none;
+  }
+
+  .rellenar {
+    transition: none;
+  }
+
+  .panel-entra {
+    transition: opacity 150ms ease;
+  }
+
+  @starting-style {
+    .panel-entra {
+      transform: none;
+      opacity: 0;
+    }
+  }
 }

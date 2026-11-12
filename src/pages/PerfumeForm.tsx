@@ -1,6 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useAvisos } from '../components/Avisos'
 import { db } from '../db/db'
 import type { Perfume } from '../db/tipos'
 
@@ -15,6 +16,7 @@ export default function PerfumeForm() {
   const { id } = useParams()
   const editando = Boolean(id)
   const navigate = useNavigate()
+  const avisar = useAvisos()
   const existente = useLiveQuery(() => (id ? db.perfumes.get(id) : undefined), [id])
 
   const [nombre, setNombre] = useState('')
@@ -68,6 +70,7 @@ export default function PerfumeForm() {
 
     if (editando && existente) {
       await db.perfumes.update(existente.id, datos)
+      avisar('Perfume guardado')
       navigate(`/perfumes/${existente.id}`, { replace: true })
     } else {
       const nuevo: Perfume = {
@@ -77,6 +80,7 @@ export default function PerfumeForm() {
         creadoEn: new Date().toISOString(),
       }
       await db.perfumes.add(nuevo)
+      avisar('Perfume creado')
       navigate(`/perfumes/${nuevo.id}`, { replace: true })
     }
   }

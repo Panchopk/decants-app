@@ -19,8 +19,8 @@ export default function BarraStock({ restantes, iniciales, bajo }: Props) {
       </div>
       <div className="mt-1 h-2 overflow-hidden rounded-full bg-sunken">
         <div
-          className={`h-full ${bajo ? 'bg-debt-bar' : 'bg-primary-bar'}`}
-          style={{ width: `${pct}%` }}
+          className={`rellenar h-full w-full ${bajo ? 'bg-debt-bar' : 'bg-primary-bar'}`}
+          style={{ transform: `scaleX(${pct / 100})` }}
         />
       </div>
     </div>
