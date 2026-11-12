@@ -29,7 +29,7 @@ export default function Perfumes() {
         <h1 className="text-2xl font-bold">Perfumes</h1>
         <Link
           to="/perfumes/nuevo"
-          className="rounded-lg bg-indigo-600 px-4 py-3 font-medium text-white"
+          className="rounded-lg bg-primary px-4 py-3 font-medium text-on-primary"
         >
           Nuevo
         </Link>
@@ -38,20 +38,20 @@ export default function Perfumes() {
       <div className="mt-4 flex gap-2 text-sm">
         <button
           onClick={() => setVerArchivados(false)}
-          className={`rounded-full px-3 py-2 ${!verArchivados ? 'bg-slate-800 text-white' : 'bg-slate-200'}`}
+          className={`rounded-full px-3 py-2 ${!verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
         >
           Activos
         </button>
         <button
           onClick={() => setVerArchivados(true)}
-          className={`rounded-full px-3 py-2 ${verArchivados ? 'bg-slate-800 text-white' : 'bg-slate-200'}`}
+          className={`rounded-full px-3 py-2 ${verArchivados ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
         >
           Archivados
         </button>
       </div>
 
       {lista.length === 0 && (
-        <p className="mt-6 text-slate-500">
+        <p className="mt-6 text-muted">
           {verArchivados ? 'No hay perfumes archivados.' : 'Aún no hay perfumes. Crea el primero.'}
         </p>
       )}
@@ -63,10 +63,10 @@ export default function Perfumes() {
             <li key={p.id}>
               <Link
                 to={`/perfumes/${p.id}`}
-                className="block rounded-xl bg-white p-4 shadow-sm"
+                className="block rounded-xl bg-surface p-4 shadow-sm"
               >
                 <div className="font-semibold">{p.nombre}</div>
-                {p.marca && <div className="text-sm text-slate-500">{p.marca}</div>}
+                {p.marca && <div className="text-sm text-muted">{p.marca}</div>}
                 <div className="mt-3">
                   <BarraStock
                     restantes={rest}

@@ -11,15 +11,15 @@ export default function BarraStock({ restantes, iniciales, bajo }: Props) {
   return (
     <div>
       <div className="flex items-baseline justify-between text-sm">
-        <span className={bajo ? 'font-semibold text-red-600' : 'text-slate-600'}>
+        <span className={bajo ? 'font-semibold text-debt' : 'text-strong'}>
           {formatoMl(restantes)} ml
           {bajo && ' · stock bajo'}
         </span>
-        <span className="text-slate-400">de {formatoMl(iniciales)} ml</span>
+        <span className="text-muted">de {formatoMl(iniciales)} ml</span>
       </div>
-      <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-200">
+      <div className="mt-1 h-2 overflow-hidden rounded-full bg-sunken">
         <div
-          className={`h-full ${bajo ? 'bg-red-500' : 'bg-indigo-500'}`}
+          className={`h-full ${bajo ? 'bg-debt-bar' : 'bg-primary-bar'}`}
           style={{ width: `${pct}%` }}
         />
       </div>

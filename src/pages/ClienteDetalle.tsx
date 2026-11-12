@@ -36,7 +36,7 @@ export default function ClienteDetalle() {
     return (
       <section>
         <p>Cliente no encontrado.</p>
-        <Link to="/clientes" className="text-indigo-600">
+        <Link to="/clientes" className="text-accent-text">
           Volver
         </Link>
       </section>
@@ -87,27 +87,27 @@ export default function ClienteDetalle() {
 
   return (
     <section>
-      <Link to="/clientes" className="text-sm text-indigo-600">
+      <Link to="/clientes" className="text-sm text-accent-text">
         ← Clientes
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{cliente.nombre}</h1>
-      {cliente.telefono && <p className="text-slate-500">{cliente.telefono}</p>}
-      {cliente.nota && <p className="mt-1 text-sm text-slate-500">{cliente.nota}</p>}
+      {cliente.telefono && <p className="text-muted">{cliente.telefono}</p>}
+      {cliente.nota && <p className="mt-1 text-sm text-muted">{cliente.nota}</p>}
 
-      <div className="mt-4 rounded-xl bg-white p-4 text-2xl shadow-sm" data-testid="saldo">
+      <div className="mt-4 rounded-xl bg-surface p-4 text-2xl shadow-sm" data-testid="saldo">
         <EtiquetaSaldo saldo={saldo} />
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
         <button
           onClick={() => setPagando((p) => !p)}
-          className="rounded-lg bg-indigo-600 p-3 font-medium text-white"
+          className="rounded-lg bg-primary p-3 font-medium text-on-primary"
         >
           Registrar pago
         </button>
         <Link
           to={`/clientes/${cliente.id}/editar`}
-          className="rounded-lg bg-slate-200 p-3 text-center font-medium"
+          className="rounded-lg bg-sunken p-3 text-center font-medium"
         >
           Editar
         </Link>
@@ -121,23 +121,23 @@ export default function ClienteDetalle() {
               href={enlace}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 block rounded-lg bg-green-600 p-3 text-center font-medium text-white"
+              className="mt-3 block rounded-lg bg-credit-btn p-3 text-center font-medium text-white"
             >
               Recordar por WhatsApp
             </a>
           ) : (
-            <p className="mt-3 text-sm text-slate-500">
+            <p className="mt-3 text-sm text-muted">
               Agrega un teléfono (con código de país) para recordar por WhatsApp.
             </p>
           )
         })()}
 
       {pagando && (
-        <form onSubmit={guardarPago} className="mt-4 space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <form onSubmit={guardarPago} className="mt-4 space-y-3 rounded-xl bg-surface p-4 shadow-sm">
           <label className="block text-sm font-medium">
             Monto
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 p-3"
+              className="mt-1 w-full rounded-lg border border-line-strong p-3"
               type="number"
               inputMode="numeric"
               value={monto}
@@ -148,7 +148,7 @@ export default function ClienteDetalle() {
             <button
               type="button"
               onClick={() => setMonto(String(saldo))}
-              className="text-sm font-medium text-indigo-600"
+              className="text-sm font-medium text-accent-text"
             >
               Pagar todo ({formatoMonto(saldo)})
             </button>
@@ -156,7 +156,7 @@ export default function ClienteDetalle() {
           <label className="block text-sm font-medium">
             Método (opcional)
             <select
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-3"
+              className="mt-1 w-full rounded-lg border border-line-strong bg-surface p-3"
               value={metodo}
               onChange={(e) => setMetodo(e.target.value as MetodoPago | '')}
             >
@@ -169,13 +169,13 @@ export default function ClienteDetalle() {
           <label className="block text-sm font-medium">
             Nota (opcional)
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 p-3"
+              className="mt-1 w-full rounded-lg border border-line-strong p-3"
               value={nota}
               onChange={(e) => setNota(e.target.value)}
             />
           </label>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <button type="submit" className="w-full rounded-lg bg-indigo-600 p-3 font-medium text-white">
+          {error && <p className="text-sm text-debt">{error}</p>}
+          <button type="submit" className="w-full rounded-lg bg-primary p-3 font-medium text-on-primary">
             Guardar pago
           </button>
         </form>
@@ -183,7 +183,7 @@ export default function ClienteDetalle() {
 
       <h2 className="mt-6 font-semibold">Historial</h2>
       {movimientos.length === 0 ? (
-        <p className="text-sm text-slate-500">Sin movimientos todavía.</p>
+        <p className="text-sm text-muted">Sin movimientos todavía.</p>
       ) : (
         <ul className="mt-2 space-y-2">
           {movimientos.map((m) => {
@@ -192,21 +192,21 @@ export default function ClienteDetalle() {
               return (
                 <li
                   key={m.id}
-                  className={`rounded-lg bg-white p-3 text-sm shadow-sm ${v.anulada ? 'opacity-50' : ''}`}
+                  className={`rounded-lg bg-surface p-3 text-sm shadow-sm ${v.anulada ? 'opacity-50' : ''}`}
                 >
                   <div className="flex justify-between">
                     <span className="font-medium">Venta{v.anulada && ' (anulada)'}</span>
-                    <span className="text-red-600">+{formatoMonto(v.total)}</span>
+                    <span className="text-debt">+{formatoMonto(v.total)}</span>
                   </div>
-                  <div className="text-slate-400">{formatoFecha(v.fecha)}</div>
+                  <div className="text-muted">{formatoFecha(v.fecha)}</div>
                   {v.items.map((i, k) => (
-                    <div key={k} className="text-slate-600">
+                    <div key={k} className="text-strong">
                       {i.cantidad} × {formatoMl(i.ml)} ml {nombrePerfume(i.perfumeId)}
                     </div>
                   ))}
                   {!v.anulada && (
                     <div className="text-right">
-                      <button onClick={() => anularVenta(v.id)} className="px-2 py-1 text-red-600">
+                      <button onClick={() => anularVenta(v.id)} className="px-2 py-1 text-debt">
                         Anular
                       </button>
                     </div>
@@ -216,19 +216,19 @@ export default function ClienteDetalle() {
             }
             const p = pagos.find((x) => x.id === m.id)!
             return (
-              <li key={m.id} className="rounded-lg bg-white p-3 text-sm shadow-sm">
+              <li key={m.id} className="rounded-lg bg-surface p-3 text-sm shadow-sm">
                 <div className="flex justify-between">
                   <span className="font-medium">Pago{p.metodo && ` · ${p.metodo}`}</span>
-                  <span className="text-green-600">−{formatoMonto(p.monto)}</span>
+                  <span className="text-credit">−{formatoMonto(p.monto)}</span>
                 </div>
-                <div className="flex items-center justify-between text-slate-400">
+                <div className="flex items-center justify-between text-muted">
                   <span>
                     {formatoFecha(p.fecha)}
                     {p.nota && ` · ${p.nota}`}
                   </span>
                   <button
                     onClick={() => eliminarPago(p.id, p.monto)}
-                    className="px-2 py-1 text-red-600"
+                    className="px-2 py-1 text-debt"
                   >
                     Eliminar
                   </button>

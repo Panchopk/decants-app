@@ -9,7 +9,7 @@ interface FilaPrecio {
   precio: string
 }
 
-const campo = 'mt-1 w-full rounded-lg border border-slate-300 bg-white p-3 text-base'
+const campo = 'mt-1 w-full rounded-lg border border-line-strong bg-surface p-3 text-base'
 
 export default function PerfumeForm() {
   const { id } = useParams()
@@ -124,17 +124,17 @@ export default function PerfumeForm() {
               <div key={i} className="flex items-center gap-2">
                 <input
                   aria-label="ml"
-                  className="w-20 rounded-lg border border-slate-300 bg-white p-3"
+                  className="w-20 rounded-lg border border-line-strong bg-surface p-3"
                   type="number"
                   inputMode="decimal"
                   step="0.1"
                   value={p.ml}
                   onChange={(e) => cambiarPrecio(i, 'ml', e.target.value)}
                 />
-                <span className="text-slate-500">ml</span>
+                <span className="text-muted">ml</span>
                 <input
                   aria-label="precio"
-                  className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white p-3"
+                  className="min-w-0 flex-1 rounded-lg border border-line-strong bg-surface p-3"
                   type="number"
                   inputMode="numeric"
                   placeholder="Precio"
@@ -145,7 +145,7 @@ export default function PerfumeForm() {
                   type="button"
                   aria-label="Quitar tamaño"
                   onClick={() => setPrecios((ps) => ps.filter((_, j) => j !== i))}
-                  className="px-3 py-2 text-xl text-slate-400"
+                  className="px-3 py-2 text-xl text-muted"
                 >
                   ×
                 </button>
@@ -155,23 +155,23 @@ export default function PerfumeForm() {
           <button
             type="button"
             onClick={() => setPrecios((ps) => [...ps, { ml: '', precio: '' }])}
-            className="mt-2 text-sm font-medium text-indigo-600"
+            className="mt-2 text-sm font-medium text-accent-text"
           >
             + Agregar tamaño
           </button>
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-debt">{error}</p>}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex-1 rounded-lg bg-slate-200 p-3 font-medium"
+            className="flex-1 rounded-lg bg-sunken p-3 font-medium"
           >
             Cancelar
           </button>
-          <button type="submit" className="flex-1 rounded-lg bg-indigo-600 p-3 font-medium text-white">
+          <button type="submit" className="flex-1 rounded-lg bg-primary p-3 font-medium text-on-primary">
             Guardar
           </button>
         </div>

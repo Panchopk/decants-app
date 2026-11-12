@@ -31,7 +31,7 @@ export default function PerfumeDetalle() {
     return (
       <section>
         <p>Perfume no encontrado.</p>
-        <Link to="/perfumes" className="text-indigo-600">
+        <Link to="/perfumes" className="text-accent-text">
           Volver
         </Link>
       </section>
@@ -72,18 +72,18 @@ export default function PerfumeDetalle() {
 
   return (
     <section>
-      <Link to="/perfumes" className="text-sm text-indigo-600">
+      <Link to="/perfumes" className="text-sm text-accent-text">
         ← Perfumes
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{perfume.nombre}</h1>
-      {perfume.marca && <p className="text-slate-500">{perfume.marca}</p>}
+      {perfume.marca && <p className="text-muted">{perfume.marca}</p>}
       {perfume.archivado && (
-        <p className="mt-2 inline-block rounded bg-amber-100 px-2 py-1 text-sm text-amber-800">
+        <p className="mt-2 inline-block rounded bg-warn-soft px-2 py-1 text-sm text-warn">
           Archivado
         </p>
       )}
 
-      <div className="mt-4 rounded-xl bg-white p-4 shadow-sm">
+      <div className="mt-4 rounded-xl bg-surface p-4 shadow-sm">
         <BarraStock
           restantes={rest}
           iniciales={perfume.mlIniciales}
@@ -96,11 +96,11 @@ export default function PerfumeDetalle() {
 
       <h2 className="mt-6 font-semibold">Precios</h2>
       {perfume.precios.length === 0 ? (
-        <p className="text-sm text-slate-500">Sin precios definidos.</p>
+        <p className="text-sm text-muted">Sin precios definidos.</p>
       ) : (
         <ul className="mt-2 flex flex-wrap gap-2">
           {perfume.precios.map((p) => (
-            <li key={p.ml} className="rounded-lg bg-white px-3 py-2 text-sm shadow-sm">
+            <li key={p.ml} className="rounded-lg bg-surface px-3 py-2 text-sm shadow-sm">
               {formatoMl(p.ml)} ml · {formatoMonto(p.precio)}
             </li>
           ))}
@@ -110,24 +110,24 @@ export default function PerfumeDetalle() {
       <div className="mt-6 grid grid-cols-2 gap-3">
         <button
           onClick={() => setAjustando((a) => !a)}
-          className="rounded-lg bg-indigo-600 p-3 font-medium text-white"
+          className="rounded-lg bg-primary p-3 font-medium text-on-primary"
         >
           Ajustar stock
         </button>
         <Link
           to={`/perfumes/${perfume.id}/editar`}
-          className="rounded-lg bg-slate-200 p-3 text-center font-medium"
+          className="rounded-lg bg-sunken p-3 text-center font-medium"
         >
           Editar
         </Link>
       </div>
 
       {ajustando && (
-        <form onSubmit={guardarAjuste} className="mt-4 space-y-3 rounded-xl bg-white p-4 shadow-sm">
+        <form onSubmit={guardarAjuste} className="mt-4 space-y-3 rounded-xl bg-surface p-4 shadow-sm">
           <label className="block text-sm font-medium">
             ml a ajustar (negativo = merma o derrame)
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 p-3"
+              className="mt-1 w-full rounded-lg border border-line-strong p-3"
               type="number"
               inputMode="decimal"
               step="0.1"
@@ -139,13 +139,13 @@ export default function PerfumeDetalle() {
           <label className="block text-sm font-medium">
             Motivo (opcional)
             <input
-              className="mt-1 w-full rounded-lg border border-slate-300 p-3"
+              className="mt-1 w-full rounded-lg border border-line-strong p-3"
               value={motivo}
               onChange={(e) => setMotivo(e.target.value)}
             />
           </label>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <button type="submit" className="w-full rounded-lg bg-indigo-600 p-3 font-medium text-white">
+          {error && <p className="text-sm text-debt">{error}</p>}
+          <button type="submit" className="w-full rounded-lg bg-primary p-3 font-medium text-on-primary">
             Guardar ajuste
           </button>
         </form>
@@ -158,12 +158,12 @@ export default function PerfumeDetalle() {
             {[...ajustes]
               .sort((a, b) => b.fecha.localeCompare(a.fecha))
               .map((a) => (
-                <li key={a.id} className="flex justify-between rounded-lg bg-white p-3 text-sm shadow-sm">
+                <li key={a.id} className="flex justify-between rounded-lg bg-surface p-3 text-sm shadow-sm">
                   <span>
                     {a.motivo}
-                    <span className="block text-slate-400">{formatoFecha(a.fecha)}</span>
+                    <span className="block text-muted">{formatoFecha(a.fecha)}</span>
                   </span>
-                  <span className={a.ml < 0 ? 'text-red-600' : 'text-green-600'}>
+                  <span className={a.ml < 0 ? 'text-debt' : 'text-credit'}>
                     {a.ml > 0 ? '+' : ''}
                     {formatoMl(a.ml)} ml
                   </span>
@@ -175,22 +175,22 @@ export default function PerfumeDetalle() {
 
       <h2 className="mt-6 font-semibold">Historial de ventas</h2>
       {ventasDelPerfume.length === 0 ? (
-        <p className="text-sm text-slate-500">Aún no se ha vendido.</p>
+        <p className="text-sm text-muted">Aún no se ha vendido.</p>
       ) : (
         <ul className="mt-2 space-y-2">
           {ventasDelPerfume.map((v) => (
             <li
               key={v.id}
-              className={`rounded-lg bg-white p-3 text-sm shadow-sm ${v.anulada ? 'opacity-50' : ''}`}
+              className={`rounded-lg bg-surface p-3 text-sm shadow-sm ${v.anulada ? 'opacity-50' : ''}`}
             >
               <div className="flex justify-between">
                 <span>{nombreCliente(v.clienteId)}</span>
-                <span className="text-slate-400">{formatoFecha(v.fecha)}</span>
+                <span className="text-muted">{formatoFecha(v.fecha)}</span>
               </div>
               {v.items
                 .filter((i) => i.perfumeId === perfume.id)
                 .map((i, k) => (
-                  <div key={k} className="text-slate-600">
+                  <div key={k} className="text-strong">
                     {i.cantidad} × {formatoMl(i.ml)} ml
                     {v.anulada && ' · anulada'}
                   </div>
@@ -202,7 +202,7 @@ export default function PerfumeDetalle() {
 
       <button
         onClick={alternarArchivo}
-        className="mt-8 w-full rounded-lg border border-slate-300 p-3 font-medium text-slate-600"
+        className="mt-8 w-full rounded-lg border border-line-strong p-3 font-medium text-strong"
       >
         {perfume.archivado ? 'Restaurar perfume' : 'Archivar perfume'}
       </button>

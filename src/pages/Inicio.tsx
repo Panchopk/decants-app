@@ -41,7 +41,7 @@ export default function Inicio() {
     <section>
       <h1 className="text-2xl font-bold">Inicio</h1>
 
-      <div className="mt-4 rounded-xl bg-indigo-600 p-5 text-white shadow-sm">
+      <div className="mt-4 rounded-xl bg-primary p-5 text-on-primary shadow-sm">
         <div className="text-sm opacity-80">Total por cobrar</div>
         <div className="text-3xl font-bold" data-testid="por-cobrar">
           {formatoMonto(porCobrar)}
@@ -50,17 +50,17 @@ export default function Inicio() {
 
       <h2 className="mt-6 font-semibold">Quién te debe</h2>
       {deudores.length === 0 ? (
-        <p className="mt-2 text-sm text-slate-500">Nadie te debe nada. 🎉</p>
+        <p className="mt-2 text-sm text-muted">Nadie te debe nada. 🎉</p>
       ) : (
         <ul className="mt-2 space-y-2" data-testid="deudores">
           {deudores.map(({ c, saldo }) => (
             <li key={c.id}>
               <Link
                 to={`/clientes/${c.id}`}
-                className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
+                className="flex items-center justify-between rounded-xl bg-surface p-4 shadow-sm"
               >
                 <span className="font-medium">{c.nombre}</span>
-                <span className="font-semibold text-red-600">{formatoMonto(saldo)}</span>
+                <span className="font-semibold text-debt">{formatoMonto(saldo)}</span>
               </Link>
             </li>
           ))}
@@ -69,12 +69,12 @@ export default function Inicio() {
 
       <h2 className="mt-6 font-semibold">Stock bajo</h2>
       {stockBajo.length === 0 ? (
-        <p className="mt-2 text-sm text-slate-500">Todos los perfumes tienen stock suficiente.</p>
+        <p className="mt-2 text-sm text-muted">Todos los perfumes tienen stock suficiente.</p>
       ) : (
         <ul className="mt-2 space-y-2" data-testid="stock-bajo">
           {stockBajo.map(({ p, rest }) => (
             <li key={p.id}>
-              <Link to={`/perfumes/${p.id}`} className="block rounded-xl bg-white p-4 shadow-sm">
+              <Link to={`/perfumes/${p.id}`} className="block rounded-xl bg-surface p-4 shadow-sm">
                 <div className="mb-2 font-medium">{p.nombre}</div>
                 <BarraStock restantes={rest} iniciales={p.mlIniciales} bajo />
               </Link>

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../db/db'
 import type { Cliente } from '../db/tipos'
 
-const campo = 'mt-1 w-full rounded-lg border border-slate-300 bg-white p-3 text-base'
+const campo = 'mt-1 w-full rounded-lg border border-line-strong bg-surface p-3 text-base'
 
 export default function ClienteForm() {
   const { id } = useParams()
@@ -64,16 +64,16 @@ function Formulario({ existente }: { existente?: Cliente }) {
           Nota (opcional)
           <textarea className={campo} value={nota} onChange={(e) => setNota(e.target.value)} />
         </label>
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-debt">{error}</p>}
         <div className="flex gap-3">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex-1 rounded-lg bg-slate-200 p-3 font-medium"
+            className="flex-1 rounded-lg bg-sunken p-3 font-medium"
           >
             Cancelar
           </button>
-          <button type="submit" className="flex-1 rounded-lg bg-indigo-600 p-3 font-medium text-white">
+          <button type="submit" className="flex-1 rounded-lg bg-primary p-3 font-medium text-on-primary">
             Guardar
           </button>
         </div>

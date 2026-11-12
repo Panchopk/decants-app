@@ -2,12 +2,12 @@
 
 const tab = ({ isActive }: { isActive: boolean }) =>
   `flex flex-1 flex-col items-center justify-center py-3 text-sm font-medium ${
-    isActive ? 'text-indigo-600' : 'text-slate-500'
+    isActive ? 'text-accent-text' : 'text-muted'
   }`
 
 export default function NavInferior() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-10 flex items-stretch border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)]">
+    <nav className="fixed inset-x-0 bottom-0 z-10 flex items-stretch border-t border-line bg-surface pb-[env(safe-area-inset-bottom)]">
       <NavLink to="/" end className={tab}>
         Inicio
       </NavLink>
@@ -18,7 +18,7 @@ export default function NavInferior() {
         <NavLink
           to="/venta"
           aria-label="Nueva venta"
-          className="-mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-indigo-600 text-3xl text-white shadow-lg"
+          className="-mt-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-3xl text-on-primary shadow-lg"
         >
           +
         </NavLink>

@@ -1,5 +1,110 @@
 ﻿@import "tailwindcss";
 
+/*
+ * Colores como variables: el tema claro conserva los colores de siempre
+ * (indigo y slate de Tailwind); el oscuro se activa con data-tema="oscuro"
+ * en <html> (ver src/lib/tema.ts).
+ */
+:root {
+  color-scheme: light;
+
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --sunken: #e2e8f0;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --strong: #475569;
+  --line: #e2e8f0;
+  --line-strong: #cbd5e1;
+
+  --primary: #4f46e5;
+  --on-primary: #ffffff;
+  --primary-bar: #6366f1;
+  --primary-soft: #e0e7ff;
+  --primary-soft-ink: #3730a3;
+  --primary-edge: #818cf8;
+  --accent-text: #4f46e5;
+
+  --pill: #1e293b;
+  --on-pill: #ffffff;
+
+  --debt: #dc2626;
+  --debt-bar: #ef4444;
+  --debt-soft: #fee2e2;
+  --debt-ink: #991b1b;
+  --credit: #16a34a;
+  --credit-btn: #16a34a;
+  --credit-soft: #dcfce7;
+  --credit-ink: #166534;
+  --warn: #92400e;
+  --warn-soft: #fef3c7;
+}
+
+:root[data-tema="oscuro"] {
+  color-scheme: dark;
+
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --sunken: #334155;
+  --ink: #f1f5f9;
+  --muted: #94a3b8;
+  --strong: #cbd5e1;
+  --line: #334155;
+  --line-strong: #475569;
+
+  --primary: #5850ec;
+  --on-primary: #ffffff;
+  --primary-bar: #818cf8;
+  --primary-soft: #312e81;
+  --primary-soft-ink: #c7d2fe;
+  --primary-edge: #6366f1;
+  --accent-text: #a5b4fc;
+
+  --pill: #e2e8f0;
+  --on-pill: #0f172a;
+
+  --debt: #f87171;
+  --debt-bar: #f87171;
+  --debt-soft: #450a0a;
+  --debt-ink: #fca5a5;
+  --credit: #4ade80;
+  --credit-btn: #15803d;
+  --credit-soft: #052e16;
+  --credit-ink: #86efac;
+  --warn: #fcd34d;
+  --warn-soft: #451a03;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-strong: var(--strong);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-bar: var(--primary-bar);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-ink: var(--primary-soft-ink);
+  --color-primary-edge: var(--primary-edge);
+  --color-accent-text: var(--accent-text);
+  --color-pill: var(--pill);
+  --color-on-pill: var(--on-pill);
+  --color-debt: var(--debt);
+  --color-debt-bar: var(--debt-bar);
+  --color-debt-soft: var(--debt-soft);
+  --color-debt-ink: var(--debt-ink);
+  --color-credit: var(--credit);
+  --color-credit-btn: var(--credit-btn);
+  --color-credit-soft: var(--credit-soft);
+  --color-credit-ink: var(--credit-ink);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+}
+
 html,
 body,
 #root {
@@ -8,6 +113,18 @@ body,
 
 body {
   margin: 0;
-  background: #f8fafc;
-  color: #0f172a;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+input,
+textarea,
+select {
+  color: var(--ink);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
 }

@@ -4,9 +4,17 @@ import { db } from '../db/db'
 import { useUmbralStockBajo } from '../db/hooks'
 import { formatoFecha } from '../lib/formato'
 import { exportarRespaldo, restaurarRespaldo, validarRespaldo } from '../lib/respaldo'
+import { guardarTema, leerTema, type Tema } from '../lib/tema'
+
+const TEMAS: { valor: Tema; etiqueta: string }[] = [
+  { valor: 'auto', etiqueta: 'Automático' },
+  { valor: 'claro', etiqueta: 'Claro' },
+  { valor: 'oscuro', etiqueta: 'Oscuro' },
+]
 
 export default function Ajustes() {
   const umbral = useUmbralStockBajo()
+  const [tema, setTema] = useState<Tema>(leerTema)
   const config = useLiveQuery(() => db.config.toArray())
   const simbolo = String(config?.find((c) => c.clave === 'simboloMoneda')?.valor ?? '')
   const ultimo = config?.find((c) => c.clave === 'ultimoRespaldo')?.valor
@@ -52,17 +60,17 @@ export default function Ajustes() {
       <h1 className="text-2xl font-bold">Ajustes</h1>
 
       <h2 className="mt-6 font-semibold">Respaldo</h2>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-1 text-sm text-muted">
         Tus datos viven solo en este celular. Exporta un respaldo seguido.{' '}
         {typeof ultimo === 'string'
           ? `Último respaldo: ${formatoFecha(ultimo)}.`
           : 'Aún no has exportado ninguno.'}
       </p>
       <div className="mt-3 grid grid-cols-2 gap-3">
-        <button onClick={exportar} className="rounded-lg bg-indigo-600 p-3 font-medium text-white">
+        <button onClick={exportar} className="rounded-lg bg-primary p-3 font-medium text-on-primary">
           Exportar
         </button>
-        <label className="cursor-pointer rounded-lg bg-slate-200 p-3 text-center font-medium">
+        <label className="cursor-pointer rounded-lg bg-sunken p-3 text-center font-medium">
           Importar
           <input type="file" accept="application/json,.json" onChange={importar} className="hidden" />
         </label>
@@ -70,17 +78,36 @@ export default function Ajustes() {
       {mensaje && (
         <p
           role="status"
-          className={`mt-3 rounded-lg p-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+          className={`mt-3 rounded-lg p-3 text-sm ${mensaje.tipo === 'ok' ? 'bg-credit-soft text-credit-ink' : 'bg-debt-soft text-debt-ink'}`}
         >
           {mensaje.texto}
         </p>
       )}
 
+      <h2 className="mt-8 font-semibold">Apariencia</h2>
+      <div role="group" aria-label="Tema" className="mt-3 grid grid-cols-3 gap-2">
+        {TEMAS.map((t) => (
+          <button
+            key={t.valor}
+            type="button"
+            aria-pressed={tema === t.valor}
+            onClick={() => {
+              setTema(t.valor)
+              guardarTema(t.valor)
+            }}
+            className={`rounded-lg p-3 text-sm font-medium ${tema === t.valor ? 'bg-pill text-on-pill' : 'bg-sunken'}`}
+          >
+            {t.etiqueta}
+          </button>
+        ))}
+      </div>
+      <p className="mt-2 text-sm text-muted">Automático sigue el tema del celular.</p>
+
       <h2 className="mt-8 font-semibold">Preferencias</h2>
       <label className="mt-3 block text-sm font-medium">
         Avisar de stock bajo cuando queden (ml) o menos
         <input
-          className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-3"
+          className="mt-1 w-full rounded-lg border border-line-strong bg-surface p-3"
           type="number"
           inputMode="decimal"
           min="0"
@@ -94,7 +121,7 @@ export default function Ajustes() {
       <label className="mt-4 block text-sm font-medium">
         Símbolo de moneda (opcional, ej. $)
         <input
-          className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-3"
+          className="mt-1 w-full rounded-lg border border-line-strong bg-surface p-3"
           maxLength={4}
           value={simbolo}
           onChange={(e) => db.config.put({ clave: 'simboloMoneda', valor: e.target.value })}

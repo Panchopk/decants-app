@@ -31,7 +31,7 @@ export default function Clientes() {
         <h1 className="text-2xl font-bold">Clientes</h1>
         <Link
           to="/clientes/nuevo"
-          className="rounded-lg bg-indigo-600 px-4 py-3 font-medium text-white"
+          className="rounded-lg bg-primary px-4 py-3 font-medium text-on-primary"
         >
           Nuevo
         </Link>
@@ -42,7 +42,7 @@ export default function Clientes() {
         placeholder="Buscar cliente"
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
-        className="mt-4 w-full rounded-lg border border-slate-300 bg-white p-3"
+        className="mt-4 w-full rounded-lg border border-line-strong bg-surface p-3"
       />
       <label className="mt-3 flex items-center gap-2 text-sm">
         <input
@@ -55,7 +55,7 @@ export default function Clientes() {
       </label>
 
       {lista.length === 0 && (
-        <p className="mt-6 text-slate-500">
+        <p className="mt-6 text-muted">
           {datos.clientes.length === 0 ? 'Aún no hay clientes.' : 'Sin resultados.'}
         </p>
       )}
@@ -65,7 +65,7 @@ export default function Clientes() {
           <li key={c.id}>
             <Link
               to={`/clientes/${c.id}`}
-              className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
+              className="flex items-center justify-between rounded-xl bg-surface p-4 shadow-sm"
             >
               <span className="font-semibold">{c.nombre}</span>
               <EtiquetaSaldo saldo={saldo} />

@@ -6,7 +6,7 @@ import type { Cliente, ItemVenta, Pago, Venta } from '../db/tipos'
 import { mlRestantes, saldoCliente, totalVenta } from '../lib/calculos'
 import { formatoMl, formatoMonto } from '../lib/formato'
 
-const campo = 'w-full rounded-lg border border-slate-300 bg-white p-3 text-base'
+const campo = 'w-full rounded-lg border border-line-strong bg-surface p-3 text-base'
 
 export default function NuevaVenta() {
   const navigate = useNavigate()
@@ -131,18 +131,18 @@ export default function NuevaVenta() {
       {/* Cliente */}
       <h2 className="mt-4 text-sm font-medium">Cliente</h2>
       {cliente ? (
-        <div className="mt-1 flex items-center justify-between rounded-lg bg-white p-3 shadow-sm">
+        <div className="mt-1 flex items-center justify-between rounded-lg bg-surface p-3 shadow-sm">
           <div>
             <div className="font-semibold">{cliente.nombre}</div>
             {saldoPrevio !== 0 && (
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-muted">
                 {saldoPrevio > 0
                   ? `Debe ${formatoMonto(saldoPrevio)} antes de esta venta`
                   : `Saldo a favor ${formatoMonto(-saldoPrevio)}`}
               </div>
             )}
           </div>
-          <button onClick={() => setCliente(null)} className="px-2 py-1 text-sm text-indigo-600">
+          <button onClick={() => setCliente(null)} className="px-2 py-1 text-sm text-accent-text">
             Cambiar
           </button>
         </div>
@@ -162,7 +162,7 @@ export default function NuevaVenta() {
                     setCliente(c)
                     setBusqueda('')
                   }}
-                  className="w-full rounded-lg bg-white p-3 text-left shadow-sm"
+                  className="w-full rounded-lg bg-surface p-3 text-left shadow-sm"
                 >
                   {c.nombre}
                 </button>
@@ -172,7 +172,7 @@ export default function NuevaVenta() {
               <li>
                 <button
                   onClick={crearCliente}
-                  className="w-full rounded-lg border border-dashed border-indigo-400 p-3 text-left text-indigo-600"
+                  className="w-full rounded-lg border border-dashed border-primary-edge p-3 text-left text-accent-text"
                 >
                   + Crear cliente "{busqueda.trim()}"
                 </button>
@@ -185,7 +185,7 @@ export default function NuevaVenta() {
       {/* Items */}
       <h2 className="mt-6 text-sm font-medium">Perfumes</h2>
       {activos.length === 0 ? (
-        <p className="mt-1 text-sm text-slate-500">Primero crea un perfume en la pestaña Perfumes.</p>
+        <p className="mt-1 text-sm text-muted">Primero crea un perfume en la pestaña Perfumes.</p>
       ) : (
         <>
           <select
@@ -207,14 +207,14 @@ export default function NuevaVenta() {
                 <button
                   key={pr.ml}
                   onClick={() => agregarItem(perfumeSel.id, pr.ml, pr.precio)}
-                  className="rounded-lg bg-indigo-100 px-4 py-3 font-medium text-indigo-800"
+                  className="rounded-lg bg-primary-soft px-4 py-3 font-medium text-primary-soft-ink"
                 >
                   {formatoMl(pr.ml)} ml · {formatoMonto(pr.precio)}
                 </button>
               ))}
               <button
                 onClick={() => agregarItem(perfumeSel.id, 1, 0)}
-                className="rounded-lg bg-slate-200 px-4 py-3 font-medium"
+                className="rounded-lg bg-sunken px-4 py-3 font-medium"
               >
                 Otro tamaño
               </button>
@@ -225,13 +225,13 @@ export default function NuevaVenta() {
 
       <ul className="mt-3 space-y-3">
         {items.map((it, i) => (
-          <li key={i} className="rounded-xl bg-white p-3 shadow-sm">
+          <li key={i} className="rounded-xl bg-surface p-3 shadow-sm">
             <div className="flex items-center justify-between">
               <span className="font-semibold">{nombrePerfume(it.perfumeId)}</span>
               <button
                 aria-label="Quitar"
                 onClick={() => setItems((its) => its.filter((_, j) => j !== i))}
-                className="px-2 text-xl text-slate-400"
+                className="px-2 text-xl text-muted"
               >
                 ×
               </button>
@@ -240,7 +240,7 @@ export default function NuevaVenta() {
               <label>
                 ml
                 <input
-                  className="mt-1 w-full rounded-lg border border-slate-300 p-2"
+                  className="mt-1 w-full rounded-lg border border-line-strong p-2"
                   type="number"
                   inputMode="decimal"
                   step="0.1"
@@ -254,7 +254,7 @@ export default function NuevaVenta() {
                   <button
                     aria-label="Menos"
                     onClick={() => cambiarItem(i, { cantidad: Math.max(1, it.cantidad - 1) })}
-                    className="h-10 w-10 rounded-lg bg-slate-200 text-lg"
+                    className="h-10 w-10 rounded-lg bg-sunken text-lg"
                   >
                     −
                   </button>
@@ -262,7 +262,7 @@ export default function NuevaVenta() {
                   <button
                     aria-label="Más"
                     onClick={() => cambiarItem(i, { cantidad: it.cantidad + 1 })}
-                    className="h-10 w-10 rounded-lg bg-slate-200 text-lg"
+                    className="h-10 w-10 rounded-lg bg-sunken text-lg"
                   >
                     +
                   </button>
@@ -271,7 +271,7 @@ export default function NuevaVenta() {
               <label>
                 Precio c/u
                 <input
-                  className="mt-1 w-full rounded-lg border border-slate-300 p-2"
+                  className="mt-1 w-full rounded-lg border border-line-strong p-2"
                   type="number"
                   inputMode="numeric"
                   value={it.precioUnitario}
@@ -284,7 +284,7 @@ export default function NuevaVenta() {
       </ul>
 
       {advertencias.map((a) => (
-        <p key={a} className="mt-3 rounded-lg bg-amber-100 p-3 text-sm text-amber-800">
+        <p key={a} className="mt-3 rounded-lg bg-warn-soft p-3 text-sm text-warn">
           ⚠ {a} Puedes vender igual y corregir con un ajuste de stock.
         </p>
       ))}
@@ -326,12 +326,12 @@ export default function NuevaVenta() {
         <input className={`${campo} mt-1`} value={nota} onChange={(e) => setNota(e.target.value)} />
       </label>
 
-      {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-3 text-sm text-debt">{error}</p>}
 
       <button
         onClick={guardar}
         disabled={guardando}
-        className="mt-4 w-full rounded-lg bg-indigo-600 p-4 text-lg font-semibold text-white disabled:opacity-50"
+        className="mt-4 w-full rounded-lg bg-primary p-4 text-lg font-semibold text-on-primary disabled:opacity-50"
       >
         Guardar venta
       </button>

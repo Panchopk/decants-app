@@ -39,7 +39,7 @@ export default function App() {
         {avisar && (
           <Link
             to="/ajustes"
-            className="mb-4 block rounded-lg bg-amber-100 p-3 text-sm text-amber-900"
+            className="mb-4 block rounded-lg bg-warn-soft p-3 text-sm text-warn"
           >
             Hace más de 7 días que no exportas un respaldo. Toca aquí para hacerlo.
           </Link>
